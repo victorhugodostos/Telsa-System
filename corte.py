@@ -8,7 +8,7 @@ import menu as menupy
 class Corte ():
     def __init__(self):
         self.CorteJanela = Tk()
-        self.CorteJanela.title("Telsa System - CORTES")
+        self.CorteJanela.title("Telsa System - Serviços")
         self.CorteJanela.minsize(width=1200, height=600)
         self.CorteJanela.resizable(False,False)
         self.CorteCanvas = Canvas(self.CorteJanela)
@@ -20,10 +20,10 @@ class Corte ():
         self.azul = PhotoImage(file="image/azul2.png")
         self.CorteCanvas.create_image(720,385,image=self.azul)
         ## CORTES
-        self.CorteCanvastitle = self.CorteCanvas.create_text(600,100,text="CORTES",font=("Times New Roman",48,"bold"),fill="white")
+        self.CorteCanvastitle = self.CorteCanvas.create_text(600,100,text="SERVIÇOS",font=("Times New Roman",48,"bold"),fill="white")
         self.CorteCanvas.create_line(0,130,1200,130,width=3,fill="white")
         
-        ##CONECTANDO AO BANCO DE DADOS
+        ##CONECTANDO AO BANCO DE DADOS millene precisa alterar
         self.connect = sqlite3.connect("database/cortes.db")
         self.cursor = self.connect.cursor()
         
@@ -161,7 +161,4 @@ class Corte ():
         self.CorteCanvas.create_window(720,550,window=self.Btn_Voltar)
         
         self.CorteJanela.mainloop()
-#Corte()
-
-
-
+#corte()
