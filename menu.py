@@ -14,7 +14,9 @@ import caixa as caixapy
 import corte as cortepy
 import relatorio as relatoriopy
 
+
 class Menu():
+    
     def __init__ (self):
         self.MenuWindow = Tk()
         self.MenuWindow.title("Telsa System - MENU")
@@ -35,44 +37,8 @@ class Menu():
         self.MenuCanvas.create_text(600,50,text="Bem vindo "+str(self.UsuarioLogado),font=("Sawasdee",45,"bold"),fill="white")
         self.MenuCanvas.create_line(350,80,850,80,fill="white")
         
-        ################################################################VERIFICANDO DATA E A HORA
-        self.data_atual = date.today()
-        if self.data_atual.day >=10 :
-            self.Data = '{}/{}/{}'.format(self.data_atual.day,self.data_atual.month,self.data_atual.year)
-        if self.data_atual.month>=10:
-            self.Data = '{}/{}/{}'.format(self.data_atual.day,self.data_atual.month,self.data_atual.year)
-        if self.data_atual.day <10 :
-            self.Data = '0{}/{}/{}'.format(self.data_atual.day,self.data_atual.month,self.data_atual.year)
-        if self.data_atual.month<10:
-            self.Data = '{}/0{}/{}'.format(self.data_atual.day,self.data_atual.month,self.data_atual.year)
-        if self.data_atual.day >=10 and self.data_atual.month>=10:
-            self.Data = '{}/{}/{}'.format(self.data_atual.day,self.data_atual.month,self.data_atual.year)
-        if self.data_atual.day <10 and self.data_atual.month<10:
-            self.Data = '0{}/0{}/{}'.format(self.data_atual.day,self.data_atual.month,self.data_atual.year)
-        self.MenuCanvas.create_text(1000,127,text=str(self.Data),font=("Times New Roman",45,"bold"),fill="white")
-        self.Horario = self.MenuCanvas.create_text(600,127,text=strftime('%H:%M:%S'),font=("Times New Roman",45,"bold"),fill="white")
-        self.Loop = True
-        def Update():
-            while self.Loop:
-                time.sleep(1)
-                self.MenuCanvas.itemconfigure(self.Horario,text=strftime('%H:%M:%S'))
-                self.MenuCanvas.update()
-        self.UpdateInfo = threading.Thread(target=Update)
-        self.UpdateInfo.start()
-        self.AtualDate = date.today()
-        self.DiasDaSemana = ['Segunda-Feira','Terça-Feira','Quarta-Feira','Quinta-Feira','Sexta-Feira','Sabádo','Domingo']
-        self.NumeroDaSemana = self.AtualDate.weekday()
-        self.Semana = self.DiasDaSemana[self.NumeroDaSemana]
-        self.Dia = self.MenuCanvas.create_text(200,127,text=str(self.Semana),font=("Times New Roman",45,"bold"),fill="white")
-        
-        ##COLOCANDO A DATA ATUAL NO CONFIG
-        self.cursor.execute("UPDATE config SET data_atual = ? WHERE id =?",(str(self.Data),1,))
-        self.connect.commit()
-        
-        
-        
-        ######################################################################################
-        ######################################################## BOTÕES E SUAS FUNCOES
+#######################################################################################
+######################################################## BOTÕES E SUAS FUNCOES
         self.connect = sqlite3.connect("database/login.db")
         self.cursor = self.connect.cursor()
         self.cursor.execute("SELECT adm FROM logins WHERE nome =?",(str(self.UsuarioLogado),))
@@ -122,7 +88,7 @@ class Menu():
             self.Btn_Img1 = PhotoImage(file="image/clientes.png")    
             self.Btn_Clientes = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img1,text="CLIENTES",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Clientes)
             self.MenuCanvas.create_window(300,280,window=self.Btn_Clientes,width=250,height=180)
-            #####################################
+###########################################
             def Cortar():
                 self.Loop = False
                 self.MenuCanvas.update()
@@ -130,9 +96,9 @@ class Menu():
                 cortepy.Corte()
             
             self.Btn_Img2 = PhotoImage(file="image/tesoura.png")
-            self.Btn_Cortar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img2,text="CORTAR",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Cortar)
+            self.Btn_Cortar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img2,text="SERVIÇOS",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Cortar)
             self.MenuCanvas.create_window(600,280,window=self.Btn_Cortar,width=250,height=180)
-            #####################################
+#############################################
             def Produtos():
                 self.Btn_Clientes['command']=""
                 self.Btn_Produtos['command']= ""
@@ -172,9 +138,9 @@ class Menu():
                 
             
             self.Btn_Img3 = PhotoImage(file="image/produtos.png")
-            self.Btn_Produtos = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img3,text="PRODUTOS",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Produtos)
+            self.Btn_Produtos = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img3,text="PRODUTOS/VENDA",font=("Arial Black",18,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Produtos)
             self.MenuCanvas.create_window(900,280,window=self.Btn_Produtos,width=250,height=180)
-            ####################################
+####################################
             def Caixa():
                 self.Loop = False
                 self.MenuCanvas.update()
@@ -182,9 +148,9 @@ class Menu():
                 caixapy.Caixa.__init__(self)
             
             self.Btn_Img4 = PhotoImage(file="image/caixa.png")
-            self.Btn_Caixa = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img4,text="CAIXA",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Caixa)
+            self.Btn_Caixa = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img4,text="CAIXA/LUCROS",font=("Arial Black",18,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Caixa)
             self.MenuCanvas.create_window(300,480,window=self.Btn_Caixa,width=250,height=180)
-            ####################################
+####################################
             def Relatorio():
                 self.Loop = False
                 self.MenuCanvas.update()
@@ -195,7 +161,7 @@ class Menu():
             self.Btn_Img5 = PhotoImage(file="image/relatorio.png")
             self.Btn_Relatorio = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img5,text="RELATÓRIO",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Relatorio)
             self.MenuCanvas.create_window(600,480,window=self.Btn_Relatorio,width=250,height=180)
-            ####################################
+####################################
             def Logout():
                 self.Loop = False
                 self.MenuCanvas.update()
@@ -203,7 +169,7 @@ class Menu():
                 loginpy.Login.__init__(self)
                 
             self.Btn_Img6 = PhotoImage(file="image/logout.png")
-            self.Btn_Deslogar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img6,text="DESLOGAR",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Logout)
+            self.Btn_Deslogar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img6,text="SAIR",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Logout)
             self.MenuCanvas.create_window(900,480,window=self.Btn_Deslogar,width=250,height=180)
         else:
             def Cortar():
@@ -213,7 +179,7 @@ class Menu():
                 cortepy.Corte.__init__(self)
             
             self.Btn_Img2 = PhotoImage(file="image/tesoura.png")
-            self.Btn_Cortar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img2,text="CORTAR",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Cortar)
+            self.Btn_Cortar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img2,text="EXECUTAR SERVIÇO",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Cortar)
             self.MenuCanvas.create_window(600,280,window=self.Btn_Cortar,width=250,height=180)
             def Logout():
                 self.Loop = False
@@ -222,11 +188,11 @@ class Menu():
                 loginpy.Login.__init__(self)
                 
             self.Btn_Img6 = PhotoImage(file="image/logout.png")
-            self.Btn_Deslogar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img6,text="DESLOGAR",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Logout)
+            self.Btn_Deslogar = Button(self.MenuCanvas,compound = BOTTOM,image=self.Btn_Img6,text="SAIR",font=("Arial Black",20,"bold"),fg="black",bg="blue",activebackground="#00008B",command=Logout)
             self.MenuCanvas.create_window(600,480,window=self.Btn_Deslogar,width=250,height=180)
         
         
                 
-        
+
         self.MenuWindow.mainloop()
 #Menu()
